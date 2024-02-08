@@ -1,3 +1,16 @@
-.image-preview {
-    height: 100px;
+.image-upload, .transparent-button, .image-preview, .transparent-image, .download-image-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.transparent-button {
+    margin-top: 1rem;
+}
+.image-preview, .transparent-image {
+    margin-top: 1rem;
+    height: 250px;
+    border: 1px solid black;
+}
+.download-image-button {
+    margin-top: 1rem;
 }

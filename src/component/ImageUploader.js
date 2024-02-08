@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './CSS/imageUploader.css';
 const ImageUploader = () => {
-  const [image, setImage] = useState(null);
+    const [image, setImage] = useState(null);
+    const [transparentImage, setTransparentImage] = useState(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -48,17 +49,19 @@ const ImageUploader = () => {
         data[i + 3] = 0;
       }
     }
-
     ctx.putImageData(imageData, 0, 0);
 
     // Convert canvas to data URL and set it as the new image
     const newImage = canvas.toDataURL('image/png');
     setImage(newImage);
+    setTransparentImage(newImage);
 
-    // Create a temporary link element to trigger the download
+  };
+  const downloadTransparentImage = () => {
+        // Create a temporary link element to trigger the download
     const downloadLink = document.createElement('a');
-    downloadLink.href = newImage;
-    downloadLink.download = 'transparent_logo.png';
+    downloadLink.href = transparentImage;
+    downloadLink.download = 'treansparent_logo.png';
 
     // Append the link to the document and trigger the download
     document.body.appendChild(downloadLink);
@@ -70,16 +73,17 @@ const ImageUploader = () => {
 
   return (
     <div>
-      <input type="file" accept="image/*" onChange={handleImageChange} />
-      {image && (
-        <div>
-          <img className='image-preview' src={image} alt="Uploaded" />
-          <button onClick={makeBackgroundTransparent}>Make Background Transparent</button>
-        </div>
-      )}
+        <input className='image-upload' type="file" accept="image/*" onChange={handleImageChange} />
+            {image && (
+            <div className='transparent-section'>
+                <img className='image-preview' src={image} alt="Uploaded" />
+                <button className='transparent-button' onClick={makeBackgroundTransparent}>Make Background Transparent</button>
+                {transparentImage && <img className='transparent-image' src={transparentImage} alt="Transparent"/> }
+                <button className='download-image-button' onClick={downloadTransparentImage}>Download Image</button>
+            </div>
+            )}
     </div>
   );
 };
 
 export default ImageUploader;
-
